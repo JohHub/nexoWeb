@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NexoService} from '../nexo.service';
+import {NexoService, TighteningProcess} from '../nexo.service';
 import {BaseChartDirective, Color, Label} from 'ng2-charts';
 import {ChartOptions} from 'chart.js';
 
@@ -11,8 +11,8 @@ import {ChartOptions} from 'chart.js';
 export class LinechartComponent implements OnInit {
 
   public lineChartData = [
-    { data: [], label: 'Angle Values', yAxisID: 'A' },
-    { data: [], label: 'Torque Values', yAxisID: 'B'}
+    {data: [], label: 'Angle Values', yAxisID: 'A'},
+    {data: [], label: 'Torque Values', yAxisID: 'B'}
   ];
   public lineChartLabels: Label[] = [];
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
@@ -86,17 +86,26 @@ export class LinechartComponent implements OnInit {
   public lineChartLegend = true;
   public lineChartType = 'line';
 
-  @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
+  @ViewChild(BaseChartDirective, {static: true}) chart: BaseChartDirective;
 
 
-  constructor(private nexoService: NexoService) { }
-
-  public graph;
-
-  ngOnInit() {
-    this.getData();
+  constructor(private nexoService: NexoService) {
   }
 
+  public tiProcess: TighteningProcess;
+
+  ngOnInit() {
+    this.nexoService.getData()
+      .subscribe(data => {
+        this.tiProcess = data;
+        this.lineChartData[0].data = data['tightening steps'][0]['graph']['angle values'];
+        this.lineChartData[1].data = data['tightening steps'][0]['graph']['torque values'];
+        this.lineChartLabels = data['tightening steps'][0]['graph']['time values'];
+      });
+  }
+}
+
+  /*
   private getData() {
     this.nexoService.getData()
       .subscribe(data => {
@@ -121,6 +130,5 @@ export class Graph {
     this.torqueValues = torqueValues;
     this.timeValues = timeValues;
   }
-}
-
+*/
 
