@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NexoService, TighteningProcess} from '../nexo.service';
+import {NexoService} from '../nexo.service';
 import {BaseChartDirective, Color, Label} from 'ng2-charts';
 import {ChartOptions} from 'chart.js';
 
@@ -14,7 +14,7 @@ export class LinechartComponent implements OnInit {
     {data: [], label: 'Angle Values', yAxisID: 'A'},
     {data: [], label: 'Torque Values', yAxisID: 'B'}
   ];
-  public lineChartLabels: Label[] = [];
+  public lineChartLabels: number[] = [];
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     scales: {
@@ -97,26 +97,12 @@ export class LinechartComponent implements OnInit {
   ngOnInit() {
     this.nexoService.getData()
       .subscribe(data => {
-        this.tiProcess = data;
-        this.lineChartData[0].data = data['tightening steps'][0]['graph']['angle values'];
-        this.lineChartData[1].data = data['tightening steps'][0]['graph']['torque values'];
-        this.lineChartLabels = data['tightening steps'][0]['graph']['time values'];
+        this.tiProcess = new TighteningProcess(data);
+        this.lineChartLabels = this.tiProcess.tighteningSteps[0].graph.timeValues;
+        this.lineChartData[0].data = this.tiProcess.tighteningSteps[0].graph.angleValues;
+        this.lineChartData[1].data = this.tiProcess.tighteningSteps[0].graph.torqueValues;
       });
   }
-}
-
-  /*
-  private getData() {
-    this.nexoService.getData()
-      .subscribe(data => {
-        this.graph = new Graph(data['angle values'], data['torque values'], data['time values']);
-        this.lineChartData[0].data = this.graph.angleValues;
-        this.lineChartData[1].data = this.graph.torqueValues;
-        this.lineChartLabels = this.graph.timeValues;
-      });
-  }
-
-
 }
 
 export class Graph {
@@ -124,11 +110,93 @@ export class Graph {
   torqueValues: number[];
   timeValues: number[];
 
-
-  constructor(angleValues: number[], torqueValues: number[], timeValues: number[]) {
-    this.angleValues = angleValues;
-    this.torqueValues = torqueValues;
-    this.timeValues = timeValues;
+  constructor(data) {
+    this.angleValues = data['angle values'];
+    this.torqueValues = data['torque values'];
+    this.timeValues = data['time values'];
   }
-*/
+}
+
+export class TighteningFunction {
+  name: string;
+  nom: number;
+  act: number;
+
+  constructor(data) {
+    Object.assign(this, data);
+  }
+}
+
+export class TighteningStep {
+  result: string;
+  name: string;
+  row: string;
+  column: string;
+  category: number;
+  torque: number;
+  angle: number;
+  duration: number;
+  speed: number;
+  graph: Graph;
+  stepType: string;
+  lastCmd: string;
+  qualityCode: string;
+  angleThresholdNom: number;
+  angleThresholdAct: number;
+  tighteningFunctions: TighteningFunction[];
+
+
+  constructor(data) {
+    Object.assign(this, data);
+    this.tighteningFunctions = [];
+    for (var _i = 0; _i<data['tightening functions'].length; _i++) {
+      this.tighteningFunctions[_i] = data['tightening functions'][_i];
+    }
+    this.graph = new Graph(data['graph']);
+  }
+}
+
+export class TighteningProcess {
+  nr: number;
+  result: string;
+  channel: string;
+  cycle: number;
+  date: string;
+  mcefactor: number;
+  prgNr: number;
+  prgName: string;
+  prgDate: string;
+  nominalTorque: number;
+  idCode: string;
+  torqueUnit: string;
+  lastCmd: string;
+  qualityCode: string;
+  totalTime?: any;
+  toolSerial: string;
+  reworkCode: number;
+  reworkText: string;
+  cellId: string;
+  jobNr: number;
+  MCEFactor: number;
+  batchNr: string;
+  batchDanceled: number;
+  batchDirectionOK: number;
+  batchDirectionNOK: number;
+  batchMaxOK: number;
+  batchMaxNOK: number;
+  batchOK: number;
+  batchNOK: number;
+  tighteningSteps: TighteningStep[];
+
+  constructor(data) {
+    Object.assign(this, data);
+    this.tighteningSteps = [];
+    for(var _i = 0; _i<data['tightening steps'].length; _i++) {
+      this.tighteningSteps[_i] = new TighteningStep(data['tightening steps'][_i]);
+    }
+  }
+
+}
+
+
 
