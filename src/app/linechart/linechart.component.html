@@ -1,5 +1,31 @@
+<div id="topf">Detailed view of last Tightening Process</div>
 <div>
-  <div style="display: block; width: 800px; height: 600px">
+  <ul>
+    <li>Result: {{tiProcess.result}}</li>
+    <li>Date: {{tiProcess.date}}</li>
+    <li>Prg. Name: {{tiProcess.prgName}}</li>
+    <li *ngFor="let t of tiProcess.tighteningSteps; let i = index">
+      Tightening Step {{i}}:
+      <ul>
+        <li>Name: {{t.name}}</li>
+        <li>Torque: {{t.torque}}</li>
+        <li>Angle: {{t.angle}}</li>
+        <li>Duration: {{t.duration}}</li>
+        <li>Speed: {{t.speed}}</li>
+        <li>
+          <canvas id="{{i}}" baseChart
+                  [datasets]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  [legend]="lineChartLegend"
+                  [chartType]="lineChartType">
+          </canvas>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <div id="chart">
     <canvas baseChart
             [datasets]="lineChartData"
             [labels]="lineChartLabels"
@@ -9,3 +35,5 @@
     </canvas>
   </div>
 </div>
+
+

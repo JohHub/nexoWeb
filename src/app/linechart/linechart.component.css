@@ -1,0 +1,13 @@
+#topf {
+  text-align: center;
+  font-size: 60px;
+
+}
+
+#chart {
+  display: block;
+  width: 800px;
+  height: 600px;
+  position: relative;
+  left: 20%;
+}
