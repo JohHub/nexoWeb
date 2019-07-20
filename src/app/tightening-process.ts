@@ -15,7 +15,7 @@ export class TighteningProcess {
   public torqueUnit: string;
   public lastCmd: string;
   public qualityCode: string;
-  public totalTime?: any;
+  public totalTime: number;
   public toolSerial: string;
   public reworkCode: number;
   public reworkText: string;
@@ -33,7 +33,8 @@ export class TighteningProcess {
   public tighteningSteps: TighteningStep[];
 
   constructor(data) {
-    Object.assign(this, data);
+    Object.assign(this, {...data});
+    this.prgName = data['prg name'];
     this.tighteningSteps = [];
     for(let _i = 0; _i < data['tightening steps'].length; _i++) {
       this.tighteningSteps[_i] = new TighteningStep(data['tightening steps'][_i]);

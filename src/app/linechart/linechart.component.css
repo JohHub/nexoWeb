@@ -1,13 +1,35 @@
-#topf {
+#headline {
   text-align: center;
   font-size: 60px;
 
 }
 
-#chart {
-  display: block;
-  width: 800px;
-  height: 600px;
+.chart {
   position: relative;
-  left: 20%;
+  float: left;
+  width: 800px;
+  height: auto;
+  margin-left: 50px;
+}
+
+.listing {
+  position: relative;
+  float: left;
+}
+:host {
+  line-height: 1.5;
+}
+
+#content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color-green {
+  color: green;
+}
+
+.color-red {
+  color: red;
 }
