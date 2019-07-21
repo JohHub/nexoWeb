@@ -22,9 +22,14 @@ export class TighteningStep {
 
   constructor(data) {
     Object.assign(this, data);
+    this.stepType = data['step type'];
+    this.lastCmd = data['last cmd'];
+    this.qualityCode = data['quality code'];
+    this.angleThresholdNom = data['angle treshold nom'];
+    this.angleThresholdAct = data['angle treshold act'];
     this.tighteningFunctions = [];
-    for (let _i = 0; _i <data['tightening functions'].length; _i++) {
-      this.tighteningFunctions[_i] = data['tightening functions'][_i];
+    for (let i = 0; i < data['tightening functions'].length; i++) {
+      this.tighteningFunctions[i] = data['tightening functions'][i];
     }
     this.graph = new Graph(data['graph']);
   }

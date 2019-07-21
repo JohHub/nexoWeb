@@ -1,14 +1,8 @@
-import {Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewChildren} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {NexoService} from '../nexo.service';
-import {BaseChartDirective, Color, Label} from 'ng2-charts';
-import {ChartData, ChartDataSets, ChartOptions} from 'chart.js';
+import {BaseChartDirective} from 'ng2-charts';
+import { ChartOptions} from 'chart.js';
 import {TighteningProcess} from '../tightening-process';
-import {Graph} from '../graph';
-import {TighteningFunction} from '../tightening-function';
-import {TighteningStep} from '../tightening-step';
-import {error} from 'selenium-webdriver';
-import {MyChartData} from '../chart-data';
-import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-linechart',
@@ -91,19 +85,15 @@ export class LinechartComponent implements OnInit {
     this.nexoService.getData()
       .subscribe(data => {
         this.tiProcess = new TighteningProcess(data);
-        console.log(this.tiProcess);
-        console.log(this.tiProcess.prgName);
       });
   }
 
+  // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
 
     const d: BaseChartDirective[] = this.c.toArray();
 
-    // TODO Access to String Values
-
-    console.log(d[0].chart.data.datasets);
-    console.log(this.lineChartData);
+    // TODO Access to String Values better
 
     const lineChartDatas = [];
 
@@ -121,10 +111,7 @@ export class LinechartComponent implements OnInit {
       d[i].chart.data.labels = this.tiProcess.tighteningSteps[i].graph.timeValues;
       d[i].chart.update();
     }
-
-    console.log(lineChartDatas);
   }
-
 }
 
 
