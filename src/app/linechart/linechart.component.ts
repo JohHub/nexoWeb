@@ -1,23 +1,19 @@
-import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {NexoService} from '../nexo.service';
 import {BaseChartDirective} from 'ng2-charts';
-import { ChartOptions} from 'chart.js';
-import {TighteningProcess} from '../tightening-process';
+import {ChartOptions} from 'chart.js';
+import {TighteningProcess} from '../Entities/tightening-process';
 
 @Component({
   selector: 'app-linechart',
   templateUrl: './linechart.component.html',
   styleUrls: ['./linechart.component.css']
 })
-export class LinechartComponent implements OnInit {
+export class LinechartComponent implements OnInit, AfterViewInit {
 
   public lineChartData = [
     {data: [], label: 'Angle Values', yAxisID: 'A'},
     {data: [], label: 'Torque Values', yAxisID: 'B'}
-  ];
-  public lineChartData0 = [
-    {data: [0, 2], label: 'Angle Values', yAxisID: 'A'},
-    {data: [0, 3], label: 'Torque Values', yAxisID: 'B'}
   ];
   public lineChartLabels: number[] = [];
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
@@ -82,15 +78,13 @@ export class LinechartComponent implements OnInit {
 
 
   ngOnInit() {
-    this.nexoService.getData()
+    this.nexoService.getLastData()
       .subscribe(data => {
         this.tiProcess = new TighteningProcess(data);
       });
   }
 
-  // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
-
     const d: BaseChartDirective[] = this.c.toArray();
 
     // TODO Access to String Values better

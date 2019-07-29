@@ -1,4 +1,4 @@
-import { TighteningFunction } from './tightening-function';
+import {TighteningFunction} from './tightening-function';
 
 describe('TighteningFunction', () => {
   it('should create an instance', () => {

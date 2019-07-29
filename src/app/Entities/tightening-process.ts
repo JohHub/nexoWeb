@@ -6,7 +6,6 @@ export class TighteningProcess {
   public channel: string;
   public cycle: number;
   public date: string;
-  public mcefactor: number;
   public prgNr: number;
   public prgName: string;
   public prgDate: string;
@@ -32,8 +31,13 @@ export class TighteningProcess {
   public batchNOK: number;
   public tighteningSteps: TighteningStep[];
 
+
   constructor(data) {
-    Object.assign(this, {...data});
+    this.nr = data['nr'];
+    this.result = data['result'];
+    this.channel = data['channel'];
+    this.cycle = data['cycle'];
+    this.date = data['date'];
     this.prgNr = data['prg nr'];
     this.prgName = data['prg name'];
     this.prgDate = data['prg date'];
@@ -48,15 +52,15 @@ export class TighteningProcess {
     this.reworkText = data['rework text'];
     this.cellId = data['cell id'];
     this.jobNr = data['job nr'];
-    this.mcefactor = data['mce factor'];
+    this.MCEFactor = data['MCE factor'];
     this.batchNr = data['batch nr'];
-    this.batchCanceled = data['batch cancelled'];
-    this.batchDirectionOK = data['batch direction ok'];
-    this.batchDirectionNOK = data['batch direction nok'];
-    this.batchMaxOK = data['batch max ok'];
-    this.batchMaxNOK = data['batch max nok'];
-    this.batchOK = data['batch ok'];
-    this.batchNOK = data['batch nok'];
+    this.batchCanceled = data['batch canceled'];
+    this.batchDirectionOK = data['batch direction OK'];
+    this.batchDirectionNOK = data['batch direction NOK'];
+    this.batchMaxOK = data['batch max OK'];
+    this.batchMaxNOK = data['batch max NOK'];
+    this.batchOK = data['batch OK'];
+    this.batchNOK = data['batch NOK'];
     this.tighteningSteps = [];
     for (let i = 0; i < data['tightening steps'].length; i++) {
       this.tighteningSteps[i] = new TighteningStep(data['tightening steps'][i]);

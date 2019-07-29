@@ -1,4 +1,4 @@
-import { TighteningProcess } from './tightening-process';
+import {TighteningProcess} from './tightening-process';
 
 describe('TighteningProcess', () => {
   it('should create an instance', () => {

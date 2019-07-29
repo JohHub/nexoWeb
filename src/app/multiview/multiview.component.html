@@ -1,0 +1,47 @@
+<div>
+  <table [dataSource]="dataSource" mat-table multiTemplateDataRows>
+    <!-- Result Column -->
+    <ng-container matColumnDef="result">
+      <th *matHeaderCellDef mat-header-cell> Result</th>
+      <td *matCellDef="let process" mat-cell>
+        <span [ngClass]="{'color-red': process.result === 'NOK', 'color-green': process.result === 'OK'}">
+        {{process.result}}
+      </span>
+      </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="prgName">
+      <th *matHeaderCellDef mat-header-cell> prgName</th>
+      <td *matCellDef="let process" mat-cell> {{process.prgName}} </td>
+    </ng-container>
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="date">
+      <th *matHeaderCellDef mat-header-cell> Date</th>
+      <td *matCellDef="let process" mat-cell> {{process.date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <td *matCellDef="let process" [attr.colspan]="displayedColumns.length" mat-cell>
+        <div [@detailExpand]="process == expandedProcesss ? 'expanded' : 'collapsed'"
+             class="example-process-detail">
+          <div class="example-process-description">
+            {{process.description}}
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr (click)="expandedProcesss = expandedProcesss === process ? null : process"
+        *matRowDef="let process; columns: displayedColumns;"
+        [class.example-expanded-row]="expandedProcesss === process"
+        class="example-process-row"
+        mat-row>
+    </tr>
+    <tr *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row" mat-row></tr>
+  </table>
+
+  <button (click)="loadMore()" mat-raised-button>Load More</button>
+</div>
