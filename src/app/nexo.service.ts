@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {TighteningProcess} from './Entities/tightening-process';
 
 const BASE_URL = 'http://localhost:8080/nexo?index=';
 
@@ -7,7 +8,11 @@ const BASE_URL = 'http://localhost:8080/nexo?index=';
   providedIn: 'root'
 })
 export class NexoService {
-  constructor(private http: HttpClient) { }
+
+  public processes: TighteningProcess[] = [];
+
+  constructor(private http: HttpClient) {
+  }
 
   getLastData() {
     return this.http.get('http://localhost:8080/nexoLast');
@@ -16,5 +21,9 @@ export class NexoService {
   getData(index) {
     const url = BASE_URL.concat(index);
     return this.http.get(url);
+  }
+
+  addData(t: TighteningProcess) {
+    this.processes.push(t);
   }
 }

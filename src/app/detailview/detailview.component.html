@@ -1,4 +1,4 @@
-<div id="headline">Detail view of the last Tightening Process</div>
+<div id="headline">Detail view of Tightening Process {{processID}}</div>
 <div id="content">
   <ul>
     <li>Result:
@@ -45,12 +45,12 @@
               </li>
             </ul>
             <div class="chart">
-              <canvas id="{{i}}" baseChart
-                      [datasets]="lineChartData"
+              <canvas [chartType]="lineChartType" [datasets]="lineChartData"
                       [labels]="lineChartLabels"
-                      [options]="lineChartOptions"
                       [legend]="lineChartLegend"
-                      [chartType]="lineChartType">
+                      [options]="lineChartOptions"
+                      baseChart
+                      id="{{i}}">
               </canvas>
             </div>
           </div>

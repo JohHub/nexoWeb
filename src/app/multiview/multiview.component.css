@@ -53,3 +53,8 @@ tr.example-process-row:not(.example-expanded-row):active {
 .color-red {
   color: red;
 }
+
+.row-hover:hover {
+  background-color: rgba(0, 0, 0, .05);
+  cursor: pointer;
+}

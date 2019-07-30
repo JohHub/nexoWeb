@@ -1,15 +1,17 @@
 import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {NexoService} from '../nexo.service';
-import {BaseChartDirective} from 'ng2-charts';
-import {ChartOptions} from 'chart.js';
+import {ActivatedRoute} from '@angular/router';
 import {TighteningProcess} from '../Entities/tightening-process';
+import {NexoService} from '../nexo.service';
+import {ChartOptions} from 'chart.js';
+import {BaseChartDirective} from 'ng2-charts';
 
 @Component({
-  selector: 'app-linechart',
-  templateUrl: './linechart.component.html',
-  styleUrls: ['./linechart.component.css']
+  selector: 'app-detailview',
+  templateUrl: './detailview.component.html',
+  styleUrls: ['./detailview.component.css']
 })
-export class LinechartComponent implements OnInit, AfterViewInit {
+export class DetailviewComponent implements OnInit, AfterViewInit {
+
 
   public lineChartData = [
     {data: [], label: 'Angle Values', yAxisID: 'A'},
@@ -70,17 +72,19 @@ export class LinechartComponent implements OnInit, AfterViewInit {
   @ViewChildren(BaseChartDirective) c: QueryList<any>;
 
 
-  constructor(private nexoService: NexoService) {
-  }
+  processID: string = null;
 
   public tiProcess: TighteningProcess;
 
+  constructor(private route: ActivatedRoute, private nexoService: NexoService) {
+  }
 
   ngOnInit() {
-    this.nexoService.getLastData()
-      .subscribe(data => {
-        this.tiProcess = new TighteningProcess(data);
-      });
+    this.route.params.forEach((urlParameters) => {
+      this.processID = urlParameters['idCode'];
+    });
+    this.tiProcess = this.nexoService.processes.find(p => p.idCode === this.processID);
+    console.log(this.tiProcess);
   }
 
   ngAfterViewInit() {

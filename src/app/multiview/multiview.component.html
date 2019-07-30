@@ -10,6 +10,12 @@
       </td>
     </ng-container>
 
+    <!-- ID Column -->
+    <ng-container matColumnDef="idCode">
+      <th *matHeaderCellDef mat-header-cell> ID</th>
+      <td *matCellDef="let process" mat-cell> {{process.idCode}} </td>
+    </ng-container>
+
     <!-- Name Column -->
     <ng-container matColumnDef="prgName">
       <th *matHeaderCellDef mat-header-cell> prgName</th>
@@ -22,25 +28,9 @@
       <td *matCellDef="let process" mat-cell> {{process.date}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="expandedDetail">
-      <td *matCellDef="let process" [attr.colspan]="displayedColumns.length" mat-cell>
-        <div [@detailExpand]="process == expandedProcesss ? 'expanded' : 'collapsed'"
-             class="example-process-detail">
-          <div class="example-process-description">
-            {{process.description}}
-          </div>
-        </div>
-      </td>
-    </ng-container>
 
     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-    <tr (click)="expandedProcesss = expandedProcesss === process ? null : process"
-        *matRowDef="let process; columns: displayedColumns;"
-        [class.example-expanded-row]="expandedProcesss === process"
-        class="example-process-row"
-        mat-row>
-    </tr>
-    <tr *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row" mat-row></tr>
+    <tr (click)="navigateTo(row)" *matRowDef="let row; columns: displayedColumns" class="row-hover" mat-row></tr>
   </table>
 
   <button (click)="loadMore()" mat-raised-button>Load More</button>
