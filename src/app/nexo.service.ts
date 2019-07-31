@@ -26,4 +26,8 @@ export class NexoService {
   addData(t: TighteningProcess) {
     this.processes.push(t);
   }
+
+  getByIdCode(idCode: string) {
+    return this.http.get('http://localhost:8080/nexo/'.concat(idCode));
+  }
 }

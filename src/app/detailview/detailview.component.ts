@@ -1,9 +1,10 @@
 import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TighteningProcess} from '../Entities/tightening-process';
 import {NexoService} from '../nexo.service';
 import {ChartOptions} from 'chart.js';
 import {BaseChartDirective} from 'ng2-charts';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-detailview',
@@ -76,7 +77,7 @@ export class DetailviewComponent implements OnInit, AfterViewInit {
 
   public tiProcess: TighteningProcess;
 
-  constructor(private route: ActivatedRoute, private nexoService: NexoService) {
+  constructor(private route: ActivatedRoute, private nexoService: NexoService, private snackBar: MatSnackBar, private router: Router) {
   }
 
   ngOnInit() {
@@ -84,7 +85,20 @@ export class DetailviewComponent implements OnInit, AfterViewInit {
       this.processID = urlParameters['idCode'];
     });
     this.tiProcess = this.nexoService.processes.find(p => p.idCode === this.processID);
-    console.log(this.tiProcess);
+    if (this.tiProcess === undefined) {
+      this.nexoService.getByIdCode(this.processID)
+        .subscribe((data: TighteningProcess) => {
+          console.log(data);
+          if (data === null) {
+            this.snackBar.open('No Process with this ID found! Redirecting to multiview...');
+            setTimeout(() => {
+              this.router.navigate(['multi']);
+            }, 3000);
+            this.snackBar.dismiss();
+          }
+          this.tiProcess = new TighteningProcess(data);
+        });
+    }
   }
 
   ngAfterViewInit() {
