@@ -13,7 +13,9 @@ import {MatSnackBar} from '@angular/material';
 })
 export class DetailviewComponent implements OnInit, AfterViewInit {
 
-
+  /*
+  Graph Configuration
+   */
   public lineChartData = [
     {data: [], label: 'Angle Values', yAxisID: 'A'},
     {data: [], label: 'Torque Values', yAxisID: 'B'}
@@ -80,6 +82,10 @@ export class DetailviewComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute, private nexoService: NexoService, private snackBar: MatSnackBar, private router: Router) {
   }
 
+  /*
+  Get Data for the TighteningProcess with the idCode in urlParameters
+  If Data unavailable, call for Data via idCode
+   */
   ngOnInit() {
     this.route.params.forEach((urlParameters) => {
       this.processID = urlParameters['idCode'];
@@ -101,6 +107,9 @@ export class DetailviewComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /*
+  Update the Graph with Values
+   */
   ngAfterViewInit() {
     const d: BaseChartDirective[] = this.c.toArray();
     const lineChartDatas = [];

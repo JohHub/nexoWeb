@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NexoService} from '../nexo.service';
 import {TighteningProcess} from '../Entities/tightening-process';
 import {MatSnackBar, MatTable} from '@angular/material';
@@ -17,7 +17,7 @@ export interface DataInterface {
   templateUrl: './multiview.component.html',
   styleUrls: ['./multiview.component.css'],
 })
-export class MultiviewComponent implements OnInit, AfterViewInit {
+export class MultiviewComponent implements OnInit {
 
   displayedColumns: string[] = ['result', 'idCode', 'prgName', 'date'];
 
@@ -27,6 +27,8 @@ export class MultiviewComponent implements OnInit, AfterViewInit {
   }
   dataSource: DataInterface[] = [];
   public processes: TighteningProcess[] = [];
+
+  // dataIndex * 10 == Position of the first requested Document in the Database
   dataIndex = 0;
 
   ngOnInit() {
@@ -53,9 +55,6 @@ export class MultiviewComponent implements OnInit, AfterViewInit {
         }
         this.table.renderRows();
       });
-  }
-
-  ngAfterViewInit() {
   }
 
   loadMore() {

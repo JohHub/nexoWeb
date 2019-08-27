@@ -4,6 +4,8 @@ export class TighteningFunction {
   act: number;
 
   constructor(data) {
-    Object.assign(this, data);
+    this.name = data['name'];
+    this.nom = data['nom'];
+    this.act = data['act'];
   }
 }

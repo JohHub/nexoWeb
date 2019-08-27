@@ -11,6 +11,9 @@ import {TighteningProcess} from '../Entities/tightening-process';
 })
 export class LinechartComponent implements OnInit, AfterViewInit {
 
+  /*
+   * Graph Configuration
+   */
   public lineChartData = [
     {data: [], label: 'Angle Values', yAxisID: 'A'},
     {data: [], label: 'Torque Values', yAxisID: 'B'}
@@ -75,7 +78,6 @@ export class LinechartComponent implements OnInit, AfterViewInit {
 
   public tiProcess: TighteningProcess;
 
-
   ngOnInit() {
     this.nexoService.getLastData()
       .subscribe(data => {
@@ -83,6 +85,9 @@ export class LinechartComponent implements OnInit, AfterViewInit {
       });
   }
 
+  /*
+  Update the Graph with Values
+   */
   ngAfterViewInit() {
     const d: BaseChartDirective[] = this.c.toArray();
     const lineChartDatas = [];
