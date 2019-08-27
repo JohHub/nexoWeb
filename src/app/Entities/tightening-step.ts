@@ -1,3 +1,4 @@
+/* tslint:disable:no-string-literal */
 import {Graph} from './graph';
 import {TighteningFunction} from './tightening-function';
 

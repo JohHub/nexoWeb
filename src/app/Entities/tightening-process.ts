@@ -1,3 +1,4 @@
+/* tslint:disable:no-string-literal */
 import {TighteningStep} from './tightening-step';
 
 export class TighteningProcess {

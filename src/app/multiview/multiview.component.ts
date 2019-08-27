@@ -39,7 +39,7 @@ export class MultiviewComponent implements OnInit {
     this.nexoService.getData(this.dataIndex)
       .subscribe((data: []) => {
         if (data.length === 0) {
-          const snackBarRef = this.snackBar.open('No more Data available');
+          this.snackBar.open('No more Data available');
         }
         // @ts-ignore
         for (const d of data) {

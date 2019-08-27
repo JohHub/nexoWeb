@@ -1,3 +1,4 @@
+/* tslint:disable:no-string-literal */
 export class TighteningFunction {
   name: string;
   nom: number;

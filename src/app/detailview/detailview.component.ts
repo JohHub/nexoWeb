@@ -1,3 +1,4 @@
+/* tslint:disable:no-string-literal */
 import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TighteningProcess} from '../Entities/tightening-process';
